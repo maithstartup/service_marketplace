@@ -6,9 +6,11 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.Entity;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -19,11 +21,11 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("api/category")
-public class CategoryController { 
+public class CategoryController {
 
-    @Autowired     
+    @Autowired
     CategoryService categoryService;
- 
+
     @PostMapping("")
     public ResponseEntity<Object> addCategory(@RequestBody Category category){
 
@@ -32,7 +34,6 @@ public class CategoryController {
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         else
             return new ResponseEntity<>("not able to create category", HttpStatus.BAD_REQUEST);
-
     }
 
     @PostMapping("/image/{id}")
@@ -53,8 +54,8 @@ public class CategoryController {
             return new ResponseEntity<>(categorySet, HttpStatus.OK);
         else
             return new ResponseEntity<>("not able list category", HttpStatus.BAD_REQUEST);
- 
-    } 
+
+    }
 
     @GetMapping("/allname")
     public ResponseEntity<Object> getCategoryAllName(){
@@ -66,6 +67,24 @@ public class CategoryController {
 
     }
 
+
+//    @GetMapping("/")
+//
+//    public ResponseEntity<Object> getCategoryByIdOrName(@RequestParam("id")  Integer id ,
+//                                                  @RequestParam("name") String name)
+//    {
+//        Category category= null ;
+//        if(id != null)
+//            category = categoryService.getCategoryById(id);
+//        else if(name!= null)
+//            category = categoryService.getCategoryByName(name);;
+//
+//        if(category != null)
+//            return new ResponseEntity<>(category, HttpStatus.OK);
+//        else
+//            return new ResponseEntity<>("not able to find category", HttpStatus.BAD_REQUEST);
+//
+//    }
 
     @GetMapping("/id/{categoryId}")
     public ResponseEntity<Object> getCategoryById(@PathVariable("categoryId") Integer categoryId){
@@ -84,8 +103,8 @@ public class CategoryController {
             return new ResponseEntity<>(category, HttpStatus.OK);
         else
             return new ResponseEntity<>("not able to find category", HttpStatus.BAD_REQUEST);
- 
-    } 
+
+    }
     @GetMapping("/image/{categoryId}")
     public String renderImageFromDB(@PathVariable Integer categoryId, HttpServletResponse response) throws IOException {
         Category category =categoryService.getCategoryById(categoryId);
@@ -144,12 +163,12 @@ public class CategoryController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         else
             return new ResponseEntity<>("not able to delete category", HttpStatus.BAD_REQUEST);
-
     }
     
     //Query
     @GetMapping("/categorybycity/{city}")
     public ResponseEntity<Object> getCategoryByCity(@PathVariable("city") String city){
+        System.out.println(city);
         Set<String> categories= categoryService.getCategoryByCity(city);
     	if(categories != null)
             return new ResponseEntity<>(categories, HttpStatus.OK);

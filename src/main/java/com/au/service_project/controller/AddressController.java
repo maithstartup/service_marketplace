@@ -3,7 +3,6 @@ package com.au.service_project.controller;
 import com.au.service_project.entity.Address;
 import com.au.service_project.entity.Customer;
 import com.au.service_project.entity.ServiceProvider;
-import com.au.service_project.request.AddressRequest;
 import com.au.service_project.service.AddressService;
 import com.au.service_project.service.CustomerService;
 import com.au.service_project.service.ServiceProviderService;
@@ -41,16 +40,15 @@ public class AddressController {
 
             return new ResponseEntity<>(responseAddress, HttpStatus.OK);
 
-        } 
+        }
 
         return new ResponseEntity<>("not able to add", HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/serviceprovider/{id}")
-    public ResponseEntity<Object> addServiceProviderAddress(@RequestBody AddressRequest addressRequest, @PathVariable("id") Integer id){
+    public ResponseEntity<Object> addServiceProviderAddress(@RequestBody Address address, @PathVariable("id") Integer id){
 
         ServiceProvider serviceProvider =serviceProviderService.getServiceProviderById(id);
-        Address address=new Address(addressRequest.getHouseAddress(),addressRequest.getArea(),addressRequest.getCity(),addressRequest.getState(),addressRequest.getCountry(),addressRequest.getPincode());
         if(serviceProvider != null)
         {
             serviceProvider.setServiceAddress(address);

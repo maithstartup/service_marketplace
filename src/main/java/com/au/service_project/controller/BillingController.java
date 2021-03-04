@@ -20,7 +20,7 @@ import com.au.service_project.service.BillingService;
 @RequestMapping("/api/billing")
 public class BillingController {
 
-    @Autowired 
+    @Autowired
     BillingService billingService;
 
     @PostMapping("")
@@ -43,7 +43,7 @@ public class BillingController {
             return new ResponseEntity<>("No Bills Available", HttpStatus.BAD_REQUEST);
 
     }
- 
+
     @PutMapping("/{id}")
     public ResponseEntity<Object> putBilling(@PathVariable Integer id, @RequestBody Billing billing) {
         Billing response = billingService.updateBillingById(id , billing);

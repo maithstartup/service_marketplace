@@ -41,9 +41,9 @@ public class Service {
     private Set<Transaction> transactions;
 
     @Lob
-	@JsonIgnore
+//	@JsonIgnore
     @Column(name="servicePic")
-    private Byte[] servicePic;
+    private byte[] servicePic;
 
 	public Integer getServiceId() {
 		return serviceId;
@@ -141,11 +141,11 @@ public class Service {
 		this.rating = rating;
 	}
 
-	public Byte[] getServicePic() {
+	public byte[] getServicePic() {
 		return servicePic;
 	}
 
-	public void setServicePic(Byte[] servicePic) {
+	public void setServicePic(byte[] servicePic) {
 		this.servicePic = servicePic;
 	}
 

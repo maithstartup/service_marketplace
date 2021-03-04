@@ -51,15 +51,15 @@ public class ServiceProvider {
     
     @Lob
     @Column(name="serviceProviderPic")
-	@JsonIgnore
-    private Byte[] serviceProviderPic;
+//	@JsonIgnore
+    private byte[] serviceProviderPic;
 
     //Getters and setters
     
     
 	public Integer getServiceProviderId() {
 		return serviceProviderId;
-	} 
+	}
 
 	public void setServiceProviderId(Integer serviceProviderId) {
 		this.serviceProviderId = serviceProviderId;
@@ -146,11 +146,11 @@ public class ServiceProvider {
 		this.billings = billings;
 	}
 
-	public Byte[] getServiceProviderPic() {
+	public byte[] getServiceProviderPic() {
 		return serviceProviderPic;
 	}
 
-	public void setServiceProviderPic(Byte[] serviceProviderPic) {
+	public void setServiceProviderPic(byte[] serviceProviderPic) {
 		this.serviceProviderPic = serviceProviderPic;
 	}
 

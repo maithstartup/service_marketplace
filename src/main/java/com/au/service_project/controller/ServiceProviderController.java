@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.au.service_project.response.ServiceCountResponse;
 import com.au.service_project.response.ServiceProviderReport;
@@ -62,9 +63,9 @@ public class ServiceProviderController {
         else
             return new ResponseEntity<>("not able list service providers", HttpStatus.BAD_REQUEST);
 
-    }  
+    }
 
- 
+
 
     @GetMapping("/id/{serviceProviderId}")
     public ResponseEntity<Object> getServiceProvider(@PathVariable Integer serviceProviderId){
@@ -76,7 +77,7 @@ public class ServiceProviderController {
 
 
     }
-     
+    
     @GetMapping("/email/{serviceProviderEmailId}")
     public ResponseEntity<Object> getServiceProviderByEmail(@PathVariable("serviceProviderEmailId") String serviceProviderEmailId){
     	ServiceProvider serviceProvider = serviceProviderService.getServiceProviderByEmail(serviceProviderEmailId);
@@ -117,15 +118,15 @@ public class ServiceProviderController {
     }
 
 
-    @PutMapping("/id/{serviceProviderId}") 
+    @PutMapping("/id/{serviceProviderId}")
     public ResponseEntity<Object> putServiceProvider(@PathVariable Integer serviceProviderId, @RequestBody ServiceProvider serviceProvider) {
         ServiceProvider serviceProviderResponse = serviceProviderService.updateServiceProviderById(serviceProviderId , serviceProvider);
         if(serviceProviderResponse != null)
             return new ResponseEntity<>(serviceProviderResponse, HttpStatus.OK);
         else
             return new ResponseEntity<>("Could not update Service Provider Details", HttpStatus.BAD_REQUEST);
- 
-    } 
+
+    }
 
     @DeleteMapping("/id/{serviceProviderId}")
     public ResponseEntity<Object> deleteServiceProviderById(@PathVariable Integer serviceProviderId){
@@ -136,11 +137,12 @@ public class ServiceProviderController {
         else
             return new ResponseEntity<>("Could not delete the Service Provider", HttpStatus.BAD_REQUEST);
 
-    } 
+    }
 
     @PostMapping("/login")
     public ResponseEntity<Object> customerLogin(@RequestBody Map<String,String> loginMap ){
-
+        System.out.println(loginMap.get("emailId"));
+        System.out.println(loginMap.get("password"));
 
 
         ServiceProvider serviceProvider = serviceProviderService.getServiceProviderByEmail(loginMap.get("emailId"));
@@ -164,8 +166,8 @@ public class ServiceProviderController {
         else
             return new ResponseEntity<>("Could not add Category", HttpStatus.BAD_REQUEST);
     }
-   
-// Queries 
+
+// Queries
     
     @GetMapping("/spratings/{serviceProviderId}")
     public ResponseEntity<Object> getSRatingsById(@PathVariable("serviceProviderId") Integer serviceProviderId){

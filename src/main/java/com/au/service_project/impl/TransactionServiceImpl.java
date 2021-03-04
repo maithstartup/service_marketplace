@@ -18,8 +18,8 @@ public class TransactionServiceImpl  implements TransactionService{
     TransactionRepository transactionRepository;
 
     @Autowired
-    ServiceService serviceService; 
- 
+    ServiceService serviceService;
+
 
 
     public Transaction addTransaction(Transaction transaction){
@@ -55,7 +55,7 @@ public class TransactionServiceImpl  implements TransactionService{
         if(transaction.isPresent()) {
             return transaction.get();
         }
-        return null; 
+        return null;
     }
 
     @Override

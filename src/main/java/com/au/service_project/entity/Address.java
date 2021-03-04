@@ -2,7 +2,6 @@ package com.au.service_project.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,7 +9,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 public class Address {
 
     @Id
@@ -36,15 +34,6 @@ public class Address {
     @OneToOne(mappedBy = "serviceAddress")
     @JsonIgnore
     private ServiceProvider serviceProvider;
-
-	public Address(String houseAddress, String area, String city, String state, String country, Integer pincode) {
-		this.houseAddress = houseAddress;
-		this.area = area;
-		this.city = city;
-		this.state = state;
-		this.country = country;
-		this.pincode = pincode;
-	}
 
 	public Integer getAddressId() {
 		return addressId;

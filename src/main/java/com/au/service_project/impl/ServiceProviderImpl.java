@@ -42,35 +42,33 @@ public class ServiceProviderImpl  implements ServiceProviderService{
             serviceProviderRepository.save(serviceProvider);
             return "Created Service Provider Succesfully";
         }
-        catch(Exception e) 
+        catch(Exception e)
         {
             return null;
-        } 
- 
+        }
+
     }
 
     public String saveImageFile(Integer serviceProviderId, MultipartFile file) {
         try {
-            Optional<ServiceProvider> serviceProviderOptional = serviceProviderRepository.findById(serviceProviderId);
-            ServiceProvider serviceProvider=new ServiceProvider();
-            if(serviceProviderOptional.isPresent())
-            {
-                serviceProvider=serviceProviderOptional.get();
-            }
-            Byte[] byteObjects = new Byte[file.getBytes().length];
- 
-            int i = 0;
- 
-            for (byte b : file.getBytes()) {
-                byteObjects[i++] = b; 
-            }
+            ServiceProvider serviceProvider = serviceProviderRepository.findById(serviceProviderId).get();
+
+//            Byte[] byteObjects = new Byte[file.getBytes().length];
+            byte[] byteObjects = file.getBytes();
+
+//            int i = 0;
+//
+//            for (byte b : file.getBytes()) {
+//                byteObjects[i++] = b;
+//            }
 
             serviceProvider.setServiceProviderPic(byteObjects);
             serviceProviderRepository.save(serviceProvider);
             return "Image Added";
         } catch (Exception e) {
+            //todo handle better
 
-
+            e.printStackTrace();
             return null;
         }
     }
@@ -95,8 +93,8 @@ public class ServiceProviderImpl  implements ServiceProviderService{
     }
 
     public List<ServiceProvider> getServiceProviderAll(){
-       return serviceProviderRepository.findAll(Sort.by(Sort.Direction.ASC, "spRating"));
-
+       List<ServiceProvider> serviceProviders = serviceProviderRepository.findAll(Sort.by(Sort.Direction.ASC, "spRating"));
+        return serviceProviders;
 
     }
 
@@ -116,7 +114,7 @@ public class ServiceProviderImpl  implements ServiceProviderService{
 
 
             return serviceProviderRepository.save(serviceProvider3);
- 
+
         }
 
 
@@ -150,13 +148,13 @@ public class ServiceProviderImpl  implements ServiceProviderService{
         return  null;
     }
 
- 
+
 
 
     private String getEncryptedPassword(String plainPassword) {
         return bCryptPasswordEncoder.encode(plainPassword);
     }
- 
+
     
     //Query
 	@Override
@@ -170,7 +168,7 @@ public class ServiceProviderImpl  implements ServiceProviderService{
         	return spRatings;
         }
         return null;
-	} 
+	}
 
     public ServiceProviderReport getServiceProviderReport(Integer serviceProviderId){
         Optional<ServiceProvider> serviceProviderOptional = serviceProviderRepository.findById(serviceProviderId);
@@ -181,7 +179,7 @@ public class ServiceProviderImpl  implements ServiceProviderService{
             serviceProviderReport.setTotalRevenue(serviceProviderRepository.findServiceProviderRevenue(serviceProviderId));
             serviceProviderReport.setTotalRevenueGst(serviceProviderRepository.findServiceProviderRevenueGst(serviceProviderId));
             if(serviceProvider.getBillings()!=null)
-                serviceProviderReport.setNoOfBills(serviceProvider.getBillings().size());
+            serviceProviderReport.setNoOfBills(serviceProvider.getBillings().size());
             serviceProviderReport.setBillings(serviceProvider.getBillings());
             Set<Integer> customerIdSet =  serviceProviderRepository.findCustomerIdOfServiceProvider(serviceProviderId);
             serviceProviderReport.setCustomerIds(customerIdSet);
@@ -200,7 +198,7 @@ public class ServiceProviderImpl  implements ServiceProviderService{
     public ServiceCountResponse getServiceCount(Integer serviceProviderId){
         List<Integer>serviceList = serviceProviderRepository.findServiceCount(serviceProviderId);
 
-        Service service;
+        Service service= new Service();
         List<String> serviceNames=new ArrayList<>();
         List<Integer> serviceCounts=new ArrayList<>();;
         for (Integer serviceId : serviceList ){
@@ -217,7 +215,9 @@ public class ServiceProviderImpl  implements ServiceProviderService{
     }
 
     public List<String > getServiceCities(){
-        return serviceProviderRepository.findServiceCities();
+        List<String> cities=serviceProviderRepository.findServiceCities();
+
+        return cities;
 
     }
 

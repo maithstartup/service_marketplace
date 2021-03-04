@@ -3,6 +3,7 @@ package com.au.service_project.controller;
 import com.au.service_project.entity.Customer;
 import com.au.service_project.service.CustomerService;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ import java.util.Map;
 public class CustomerController {
 
     @Autowired
-    CustomerService customerService; 
+    CustomerService customerService;
 
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -69,7 +70,7 @@ public class CustomerController {
             return new ResponseEntity<>(customer, HttpStatus.OK);
         else
             return new ResponseEntity<>(NOTFOUND, HttpStatus.BAD_REQUEST);
- 
+
     }
     @GetMapping("/billing/{customerId}")
     public ResponseEntity<Object> getCustomerBilling(@PathVariable("customerId") Integer customerId)

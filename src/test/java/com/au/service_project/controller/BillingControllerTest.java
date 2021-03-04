@@ -25,12 +25,12 @@ class BillingControllerTest {
 	BillingController billingController;
 	
 	@Mock
-	BillingServiceImpl billingService; 
+	BillingServiceImpl billingService;
 	
 	@Nested 
 	class AddBillingTest {
 		
-	@Test 
+	@Test
 	void testAddBilling_Success() {
 		Billing billing = new Billing();
 		billing.setBillingId(1);
@@ -80,7 +80,7 @@ class BillingControllerTest {
 		billing.setTotalCost((float) 84);
 		billing.setTransactions(null);
 		
-			 
+			
 			Mockito.when(billingService.getBillingById(Mockito.anyInt()))
 	          .thenReturn(billing);
 			ResponseEntity<Object> response = billingController.getBilling(1);
@@ -104,7 +104,7 @@ class BillingControllerTest {
 	}
 
 	@Nested 
-	class PutBillingTest { 
+	class PutBillingTest {
 		
 	@Test
 	void testPutBilling_Success(){
@@ -195,8 +195,8 @@ class BillingControllerTest {
 			billing.setServiceProviderId(1);
 			billing.setTotalCost((float) 84);
 			billing.setTransactions(null);
-	
-			 
+		
+			
 			Mockito.when(billingService.getBillingCostById(Mockito.anyInt()))
 	          .thenReturn((float) 80);
 			ResponseEntity<Object> response = billingController.getBillingCostById(1);

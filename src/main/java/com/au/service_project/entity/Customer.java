@@ -41,7 +41,7 @@ public class Customer {
     private Set<Billing> billings;
 
     @Lob
-	@JsonIgnore
+//	@JsonIgnore
     @Column(name="customerPic")
     private byte[] customerPic;
     

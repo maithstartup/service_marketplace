@@ -23,7 +23,7 @@ import java.util.Map;
 @RequestMapping("/api/service")
 public class ServiceController {
 
-    @Autowired 
+    @Autowired
     ServiceService serviceService;
 
     @Autowired
@@ -55,7 +55,7 @@ public class ServiceController {
             return new ResponseEntity<>("not able to add image", HttpStatus.BAD_REQUEST);
     }
 
-     
+    
     
     @GetMapping("/id/{serviceId}")
     public ResponseEntity<Object> getServiceById(@PathVariable("serviceId") Integer serviceId){
@@ -153,12 +153,12 @@ public class ServiceController {
     public ResponseEntity<Object> getServicesByCategoryAndCity(@PathVariable("categoryId") Integer categoryId,@PathVariable("cityName") String cityName){
         List<Service> serviceList = serviceService.getServicesByCategoryAndCity(categoryId,cityName);
         if(serviceList != null)
-            return new ResponseEntity<>(serviceList, HttpStatus.FOUND);
+            return new ResponseEntity<>(serviceList, HttpStatus.OK);
         else
             return new ResponseEntity<>("not able to rate service", HttpStatus.BAD_REQUEST);
     }
 
 
-    } 
+    }
 
 

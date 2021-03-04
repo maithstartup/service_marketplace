@@ -1,6 +1,5 @@
 package com.au.service_project.impl;
 
-
 import com.au.service_project.entity.Customer;
 import com.au.service_project.repository.CustomerRepository;
 import com.au.service_project.service.CustomerService;
@@ -35,22 +34,23 @@ public class CustomerServiceImpl implements CustomerService {
     }
     public Customer saveImageFile(Integer customerId, MultipartFile file) {
         try {
-            Optional<Customer> customerOptional  = customerRepository.findById(customerId);
-            Customer customer=new Customer();
-            if(customerOptional.isPresent())
-            {
-                customer=customerOptional.get();
-            }
+            Customer customer = customerRepository.findById(customerId).get();
 
+//            Byte[] byteObjects = new Byte[file.getBytes().length];
             byte[] byteObjects = file.getBytes();
+//            int i = 0;
 
-
-
+//            for (byte b : file.getBytes()) {
+//                byteObjects[i++] = b;
+//            }
 
             customer.setCustomerPic(byteObjects);
             customerRepository.save(customer);
             return customer;
         } catch (Exception e) {
+            //todo handle better
+
+            e.printStackTrace();
             return null;
         }
     }

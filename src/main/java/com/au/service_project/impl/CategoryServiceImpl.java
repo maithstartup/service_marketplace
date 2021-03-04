@@ -37,13 +37,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
     public String saveImageFile(Integer categoryId, MultipartFile file) {
         try {
-            Optional<Category> categoryOptional  = categoryRepository.findById(categoryId);
-            Category category=new Category();
-            if(categoryOptional.isPresent())
-            {
-                category=categoryOptional.get();
-            }
-
+            Category category = categoryRepository.findById(categoryId).get();
 
             Byte[] byteObjects = new Byte[file.getBytes().length];
 
@@ -56,21 +50,22 @@ public class CategoryServiceImpl implements CategoryService{
             category.setCategoryPic(byteObjects);
             categoryRepository.save(category);
             return "Image Added";
-        } catch (Exception e) { 
+        } catch (Exception e) {
 
+            e.printStackTrace();
             return null;
-        } 
+        }
     }
     public List<Category> getCategoryAll(){
 
-        return categoryRepository.findAll(Sort.by(Sort.Direction.ASC,"categoryName"));
+        List<Category> categorySet = categoryRepository.findAll(Sort.by(Sort.Direction.ASC,"categoryName"));
+        return categorySet;
 
- 
     }
 
     public List<String> getCategoryAllName(){
-         return categoryRepository.findAllNames();
-
+        List<String> categoryNames = categoryRepository.findAllNames();
+        return categoryNames;
     }
 
     public Category getCategoryById(Integer categoryId){
@@ -102,7 +97,7 @@ public class CategoryServiceImpl implements CategoryService{
 
         }
         return null;
- 
+
 	}
 
 	@Override
@@ -148,10 +143,11 @@ public class CategoryServiceImpl implements CategoryService{
     public Set<String> getCategoryByCity(String city) {
         Set<Integer> spIds = categoryRepository.getCategoryByCity(city);;
         Set<String> categoryNames=new HashSet<>() ;
-        ServiceProvider serviceProvider;
+        ServiceProvider serviceProvider= new ServiceProvider();
         Set< Category> categories;
         if(spIds != null) {
             for(Integer spId:spIds) {
+                System.out.println(spId);
                 serviceProvider = serviceProviderService.getServiceProviderById(spId);
                 categories=serviceProvider.getCategory();
                 for (Category category:categories )
@@ -160,10 +156,10 @@ public class CategoryServiceImpl implements CategoryService{
                 }
 
             }
-
+            System.out.println(categoryNames);
+            return categoryNames;
         }
-        return categoryNames;
-
+        return null;
     }
 
 

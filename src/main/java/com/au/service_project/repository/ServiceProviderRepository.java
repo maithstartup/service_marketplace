@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.au.service_project.entity.Customer;
+import com.au.service_project.entity.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -27,11 +28,14 @@ public interface ServiceProviderRepository extends JpaRepository<ServiceProvider
 	@Query("SELECT s.serviceId from Service s WHERE s.serviceProviderId= ?1")
 	public List<Integer>  findServiceCount(Integer serviceProviderId);
 
+
+
 	@Query("SELECT customerId FROM Billing b  WHERE b.serviceProviderId= ?1")
 	public Set<Integer> findCustomerIdOfServiceProvider(Integer serviceProviderId);
 
 	@Query("SELECT c from Customer c where c.customerId IN ?1")
 	public Set<Customer> findCustomersOfServiceProvider(Set<Integer> customerList) ;
+
 
 	@Query("SELECT AVG(serviceRatings) FROM Service s WHERE s.serviceProviderId = ?1 GROUP BY s.serviceProviderId ")
 	public Double findServiceProviderRatings(Integer serviceProviderId);

@@ -11,7 +11,7 @@ import com.au.service_project.service.TransactionService;
 
 @RestController
 @RequestMapping("/api/transaction")
-public class TransactionController { 
+public class TransactionController {
 
     @Autowired
     TransactionService transactionService;
@@ -32,7 +32,7 @@ public class TransactionController {
             return new ResponseEntity<>("not able to create", HttpStatus.BAD_REQUEST);
 
     }
-  
+
     @GetMapping("/{id}")
     public ResponseEntity<Object> getTransaction(@PathVariable Integer id){
         Transaction response = transactionService.getTransactionById(id);
@@ -42,6 +42,15 @@ public class TransactionController {
             return new ResponseEntity<>("No Bills Available", HttpStatus.BAD_REQUEST);
     }
 
+//    @GetMapping("/customer/{custId}")
+//    public ResponseEntity<Object> getTransactions(@PathVariable Integer custId){
+//        Transaction [] response = null;
+//
+//        if(response != null)
+//            return new ResponseEntity<>(response, HttpStatus.CREATED);
+//        else
+//            return new ResponseEntity<>("No Bills Available", HttpStatus.BAD_REQUEST);
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> putTransaction(@PathVariable Integer id, @RequestBody Transaction transaction) {
@@ -50,7 +59,7 @@ public class TransactionController {
             return new ResponseEntity<>(response, HttpStatus.CREATED);
         else
             return new ResponseEntity<>("Could not update Transaction Details", HttpStatus.BAD_REQUEST);
-    } 
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteTransaction(@PathVariable Integer id){

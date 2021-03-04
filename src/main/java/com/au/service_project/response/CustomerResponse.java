@@ -24,6 +24,4 @@ public class CustomerResponse {
         this.firstName = firstName;
         this.lastName = lastName;
     }
-    
-    
 }

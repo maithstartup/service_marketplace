@@ -17,36 +17,33 @@ public class ServiceServiceImpl implements ServiceService {
     @Autowired
     ServiceRepository serviceRepository;
    
-    public String addService(Service service){ 
+    public String addService(Service service){
 
         serviceRepository.save(service);
- 
+
     return "Success";
     }
 
 	public String saveImageFile(Integer serviceId, MultipartFile file) {
 		try {
-			Optional<Service> serviceOptional = serviceRepository.findById(serviceId);
-			Service service=new Service();
-			if(serviceOptional.isPresent())
-			{
-				service=serviceOptional.get();
-			}
+			Service service = serviceRepository.findById(serviceId).get();
 
+//			Byte[] byteObjects = new Byte[file.getBytes().length];
 
-			Byte[] byteObjects = new Byte[file.getBytes().length];
-
-			int i = 0;
-
-			for (byte b : file.getBytes()) {
-				byteObjects[i++] = b;
-			}
+//			int i = 0;
+//
+//			for (byte b : file.getBytes()) {
+//				byteObjects[i++] = b;
+//			}
+			byte[] byteObjects = file.getBytes();
 
 			service.setServicePic(byteObjects);
 			serviceRepository.save(service);
 			return "Image Added";
 		} catch (Exception e) {
+			//todo handle better
 
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -77,7 +74,7 @@ public class ServiceServiceImpl implements ServiceService {
 			Service service3 = service2.get();
 			service3.setCost((service.getCost() != null) ? service.getCost() : service3.getCost());
 			service3.setDiscount((service.getDiscount() != null) ? service.getDiscount() : service3.getDiscount());
-			service3.setDiscountAvailability(service.getDiscountAvailability() );
+			service3.setDiscountAvailability((service.getDiscountAvailability() != null) ? service.getDiscountAvailability() : service3.getDiscountAvailability());
 			service3.setDetails((service.getDetails() != null) ? service.getDetails() : service3.getDetails());
 			service3.setWarranty((service.getWarranty() != null) ? service.getWarranty() : service3.getWarranty());
 			
@@ -96,7 +93,7 @@ public class ServiceServiceImpl implements ServiceService {
 			Service service3 = service2.get();
 			service3.setCost((service.getCost() != null) ? service.getCost() : service3.getCost());
 			service3.setDiscount((service.getDiscount() != null) ? service.getDiscount() : service3.getDiscount());
-			service3.setDiscountAvailability( service.getDiscountAvailability());
+			service3.setDiscountAvailability((service.getDiscountAvailability() != null) ? service.getDiscountAvailability() : service3.getDiscountAvailability());
 			service3.setDetails((service.getDetails() != null) ? service.getDetails() : service3.getDetails());
 			service3.setWarranty((service.getWarranty() != null) ? service.getWarranty() : service3.getWarranty());
 			
@@ -145,8 +142,8 @@ public class ServiceServiceImpl implements ServiceService {
 
 	public List<Service> getServicesByCategoryAndCity(Integer categoryId, String cityName){
 
-    	return serviceRepository.findServicesByCategoryAndCity(categoryId,cityName);
-
+    	List<Service> services = serviceRepository.findServicesByCategoryAndCity(categoryId,cityName);
+    	return services;
 	}
 
     
